@@ -1,0 +1,14 @@
+---
+description: Require server components, server actions, and Zod validation for database data flow
+alwaysApply: true
+---
+
+# Data Flow and Validation
+
+Database data flow must stay on the server and use typed Zod validation.
+
+- Retrieve database data in server components.
+- Perform database inserts, updates, and deletes in server actions.
+- Validate all data passed to server actions with Zod before using it.
+- Give server action inputs explicit TypeScript types; do not type server action inputs as `FormData`.
+- Prefer deriving TypeScript input types from Zod schemas when practical, so runtime validation and static types stay aligned.

@@ -1,0 +1,15 @@
+---
+description: Require Clerk authentication and per-user data ownership checks
+alwaysApply: true
+---
+
+# Clerk Auth and Data Ownership
+
+All authentication is handled by Clerk. Application code must ensure users can only access data that belongs to their Clerk user.
+
+- Use Clerk as the source of truth for the current user identity.
+- Scope every user-owned read, write, update, and delete by the authenticated Clerk user id.
+- For deck data, filter by [src/db/schema.ts](mdc:src/db/schema.ts) `decksTable.clerkUserId`.
+- For card data, authorize through the owning deck before reading or mutating cards.
+- Do not trust client-provided user ids, deck ids, or card ids as proof of access.
+- When adding new user-owned tables, include an ownership path back to the Clerk user and enforce it in all queries.

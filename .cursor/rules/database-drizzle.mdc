@@ -1,0 +1,13 @@
+---
+description: Require Drizzle schema and queries for database access
+alwaysApply: true
+---
+
+# Database Access
+
+Database interactions must use Drizzle and the project schema.
+
+- Define and update database shape in [src/db/schema.ts](mdc:src/db/schema.ts).
+- Import tables and columns from the Drizzle schema instead of duplicating table or column names.
+- Use Drizzle query builders, relations, and helpers for reads and writes.
+- Do not write raw SQL for normal application queries unless Drizzle cannot express the operation; keep any raw SQL small, typed, and justified in code.
