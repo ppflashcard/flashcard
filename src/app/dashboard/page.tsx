@@ -1,5 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
-import { desc, eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
 
 import {
   Card,
@@ -9,8 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { db } from "@/db";
-import { decksTable } from "@/db/schema";
+import { getDecksByClerkUserId } from "@/db/queries/decks";
 
 const dateFormatter = new Intl.DateTimeFormat("en", {
   dateStyle: "medium",
@@ -24,27 +23,14 @@ function getDescription(description: string | null) {
   return description?.trim() || "No description added yet.";
 }
 
-async function getDecks(clerkUserId: string) {
-  return db
-    .select({
-      id: decksTable.id,
-      name: decksTable.name,
-      description: decksTable.description,
-      createdAt: decksTable.createdAt,
-    })
-    .from(decksTable)
-    .where(eq(decksTable.clerkUserId, clerkUserId))
-    .orderBy(desc(decksTable.createdAt));
-}
-
 export default async function DashboardPage() {
-  const { userId, redirectToSignIn } = await auth();
+  const { userId } = await auth();
 
   if (!userId) {
-    return redirectToSignIn();
+    redirect("/");
   }
 
-  const decks = await getDecks(userId);
+  const decks = await getDecksByClerkUserId(userId);
 
   return (
     <main className="min-h-screen flex-1 bg-background px-6 py-16 text-foreground">

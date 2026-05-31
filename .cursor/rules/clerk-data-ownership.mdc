@@ -12,4 +12,5 @@ All authentication is handled by Clerk. Application code must ensure users can o
 - For deck data, filter by [src/db/schema.ts](mdc:src/db/schema.ts) `decksTable.clerkUserId`.
 - For card data, authorize through the owning deck before reading or mutating cards.
 - Do not trust client-provided user ids, deck ids, or card ids as proof of access.
+- If an unauthenticated user tries to access a protected page, redirect them to the homepage (`/`) so they can use the modal sign-in/sign-up buttons. Do not redirect to a standalone sign-in page; this app does not have one.
 - When adding new user-owned tables, include an ownership path back to the Clerk user and enforce it in all queries.

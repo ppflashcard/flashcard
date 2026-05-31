@@ -1,0 +1,14 @@
+---
+description: Require database reads and writes to go through db/queries helpers
+alwaysApply: true
+---
+
+# Data Handling Patterns
+
+All application data fetching and mutations must go through helper functions in `src/db/queries`.
+
+- Put reusable database read and write helpers in `src/db/queries`.
+- Server components should call query helpers for database reads instead of importing `db` directly.
+- Server actions should validate inputs, then call query helpers for inserts, updates, and deletes.
+- Query helpers must use Drizzle and import tables and columns from [src/db/schema.ts](mdc:src/db/schema.ts).
+- Do not duplicate database query logic in route handlers, components, or server actions when it belongs in `src/db/queries`.

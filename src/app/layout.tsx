@@ -1,8 +1,16 @@
-import { ClerkProvider, Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  Show,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+
+const dashboardPath = "/dashboard";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -29,12 +37,20 @@ export default function RootLayout({
         <ClerkProvider>
           <header>
             <Show when="signed-out">
-              <SignInButton mode="modal">
+              <SignInButton
+                mode="modal"
+                forceRedirectUrl={dashboardPath}
+                signUpForceRedirectUrl={dashboardPath}
+              >
                 <Button type="button" variant="outline">
                   Sign in
                 </Button>
               </SignInButton>
-              <SignUpButton mode="modal">
+              <SignUpButton
+                mode="modal"
+                forceRedirectUrl={dashboardPath}
+                signInForceRedirectUrl={dashboardPath}
+              >
                 <Button type="button">Sign up</Button>
               </SignUpButton>
             </Show>

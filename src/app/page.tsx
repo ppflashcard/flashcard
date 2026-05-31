@@ -3,11 +3,13 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
+const dashboardPath = "/dashboard";
+
 export default async function Home() {
   const { userId } = await auth();
 
   if (userId) {
-    redirect("/dashboard");
+    redirect(dashboardPath);
   }
 
   return (
@@ -23,12 +25,20 @@ export default async function Home() {
         </div>
         <Show when="signed-out">
           <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <SignInButton mode="modal">
+            <SignInButton
+              mode="modal"
+              forceRedirectUrl={dashboardPath}
+              signUpForceRedirectUrl={dashboardPath}
+            >
               <Button type="button" variant="outline">
                 Sign in
               </Button>
             </SignInButton>
-            <SignUpButton mode="modal">
+            <SignUpButton
+              mode="modal"
+              forceRedirectUrl={dashboardPath}
+              signInForceRedirectUrl={dashboardPath}
+            >
               <Button type="button">Sign up</Button>
             </SignUpButton>
           </div>
