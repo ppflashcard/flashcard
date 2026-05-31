@@ -1,4 +1,4 @@
-import { SignInButton, SignUpButton } from "@clerk/nextjs";
+import { Show, SignInButton, SignUpButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -13,16 +13,18 @@ export default function Home() {
             Your personal flashcard platform
           </p>
         </div>
-        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <SignInButton mode="modal">
-            <Button type="button" variant="outline">
-              Sign in
-            </Button>
-          </SignInButton>
-          <SignUpButton mode="modal">
-            <Button type="button">Sign up</Button>
-          </SignUpButton>
-        </div>
+        <Show when="signed-out">
+          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <SignInButton mode="modal">
+              <Button type="button" variant="outline">
+                Sign in
+              </Button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <Button type="button">Sign up</Button>
+            </SignUpButton>
+          </div>
+        </Show>
       </div>
     </main>
   );
