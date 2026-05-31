@@ -1,0 +1,27 @@
+---
+description: Use shadcn/ui for project UI elements
+alwaysApply: true
+---
+
+# shadcn/ui Components
+
+This project uses shadcn/ui for all UI elements.
+
+- Before adding custom UI primitives, prefer shadcn/ui components and patterns.
+- If shadcn/ui is not initialized in the project, initialize it with:
+
+```bash
+npx shadcn@latest init
+```
+
+- If a needed component is not installed, add it with:
+
+```bash
+npx shadcn@latest add <component>
+```
+
+For example, to install the button component:
+
+```bash
+npx shadcn@latest add button
+```
