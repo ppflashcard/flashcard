@@ -1,13 +1,18 @@
 ---
-description: Use shadcn/ui for project UI elements
+description: Require shadcn/ui for all project UI elements
 alwaysApply: true
 ---
 
 # shadcn/ui Components
 
-This project uses shadcn/ui for all UI elements.
+This project uses shadcn/ui exclusively for all UI elements.
 
-- Before adding custom UI primitives, prefer shadcn/ui components and patterns.
+- Only use shadcn/ui components and patterns for UI in this project.
+- Do not create custom UI primitives, custom-styled buttons, custom dialogs, custom forms, or one-off visual components.
+- If a needed UI component is not installed, add the matching shadcn/ui component instead of building a custom replacement.
+- If shadcn/ui does not provide an exact component, compose existing shadcn/ui components before considering any other approach.
+- All Clerk sign-in and sign-up triggers must use the shadcn/ui `Button` component.
+- Clerk sign-in and sign-up flows must open in a modal. Do not navigate directly to standalone Clerk auth pages unless the user explicitly requests a route-based auth page.
 - If shadcn/ui is not initialized in the project, initialize it with:
 
 ```bash
