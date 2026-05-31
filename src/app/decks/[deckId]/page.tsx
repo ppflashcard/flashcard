@@ -11,6 +11,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getDeckWithCardsByIdAndClerkUserId } from "@/db/queries/decks";
+import { CreateCardButton } from "./create-card-button";
+import { DeleteCardButton } from "./delete-card-button";
+import { EditCardButton } from "./edit-card-button";
+import { EditDeckButton } from "./edit-deck-button";
 
 const dateFormatter = new Intl.DateTimeFormat("en", {
   dateStyle: "medium",
@@ -77,9 +81,16 @@ export default async function DeckPage({
             </p>
           </div>
 
-          <Button asChild variant="outline">
-            <Link href="/dashboard">Back to dashboard</Link>
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <EditDeckButton
+              deckId={deck.id}
+              title={deck.name}
+              description={deck.description}
+            />
+            <Button asChild variant="outline">
+              <Link href="/dashboard">Back to dashboard</Link>
+            </Button>
+          </div>
         </div>
 
         <section className="space-y-4">
@@ -91,6 +102,7 @@ export default async function DeckPage({
                 in this deck.
               </p>
             </div>
+            <CreateCardButton deckId={deck.id} />
           </div>
 
           {deck.cards.length > 0 ? (
@@ -98,7 +110,23 @@ export default async function DeckPage({
               {deck.cards.map((card, index) => (
                 <Card key={card.id} className="min-h-64">
                   <CardHeader>
-                    <CardTitle>Card {index + 1}</CardTitle>
+                    <div className="flex items-start justify-between gap-3">
+                      <CardTitle>Card {index + 1}</CardTitle>
+                      <div className="flex gap-2">
+                        <EditCardButton
+                          deckId={deck.id}
+                          cardId={card.id}
+                          cardNumber={index + 1}
+                          front={card.front}
+                          back={card.back}
+                        />
+                        <DeleteCardButton
+                          deckId={deck.id}
+                          cardId={card.id}
+                          cardNumber={index + 1}
+                        />
+                      </div>
+                    </div>
                     <CardDescription>
                       Updated {formatDate(card.updatedAt)}
                     </CardDescription>
