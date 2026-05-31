@@ -18,6 +18,56 @@ export function getDecksByClerkUserId(clerkUserId: string) {
     .orderBy(desc(decksTable.createdAt));
 }
 
+export async function createDeckForClerkUserId({
+  clerkUserId,
+  name,
+  description,
+}: {
+  clerkUserId: string;
+  name: string;
+  description: string | null;
+}) {
+  const now = new Date();
+  const [deck] = await db
+    .insert(decksTable)
+    .values({
+      clerkUserId,
+      name,
+      description,
+      createdAt: now,
+      updatedAt: now,
+    })
+    .returning({
+      id: decksTable.id,
+      clerkUserId: decksTable.clerkUserId,
+      name: decksTable.name,
+      description: decksTable.description,
+      createdAt: decksTable.createdAt,
+      updatedAt: decksTable.updatedAt,
+    });
+
+  return deck;
+}
+
+export async function deleteDeckByIdAndClerkUserId({
+  deckId,
+  clerkUserId,
+}: {
+  deckId: number;
+  clerkUserId: string;
+}) {
+  const [deck] = await db
+    .delete(decksTable)
+    .where(
+      and(eq(decksTable.id, deckId), eq(decksTable.clerkUserId, clerkUserId))
+    )
+    .returning({
+      id: decksTable.id,
+    });
+
+  return deck ?? null;
+}
+
 export async function createCardForDeckByIdAndClerkUserId({
   deckId,
   clerkUserId,

@@ -82,6 +82,9 @@ export default async function DeckPage({
           </div>
 
           <div className="flex flex-wrap gap-2">
+            <Button asChild>
+              <Link href={`/decks/${deck.id}/study`}>Study deck</Link>
+            </Button>
             <EditDeckButton
               deckId={deck.id}
               title={deck.name}
